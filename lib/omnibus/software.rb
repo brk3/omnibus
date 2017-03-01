@@ -718,7 +718,7 @@ module Omnibus
           arch_flag = windows_arch_i386? ? "-m32" : "-m64"
           opt_flag = windows_arch_i386? ? "-march=i686" : "-march=x86-64"
           {
-            "LDFLAGS" => "-L#{install_dir}/embedded/lib #{arch_flag} -Wl,-rpath,#{install_dir}/embedded/lib",
+            "LDFLAGS" => "-L#{install_dir}/embedded/lib #{arch_flag} -fno-lto",
             # We do not wish to enable SSE even though we target i686 because
             # of a stack alignment issue with some libraries. We have not
             # exactly ascertained the cause but some compiled library/binary
