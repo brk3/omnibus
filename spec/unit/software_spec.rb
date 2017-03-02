@@ -502,9 +502,10 @@ module Omnibus
             allow(ENV).to receive(:keys).and_return(%w{ Path PATH })
           end
 
-          it "returns a path key of `Path`" do
-            expect(subject.with_embedded_path).to eq(
-              "Path" => prepended_path
+          it "and raises an error when PATH is also set" do
+            expect { subject.with_embedded_path }.to raise_error(
+              RuntimeError,
+              "The current omnibus environment has multiple PATH/Path variables."
             )
           end
         end

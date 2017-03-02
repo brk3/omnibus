@@ -51,9 +51,14 @@ module Omnibus
       #
       if windows?
         result = ENV.keys.grep(/\Apath\Z/i)
-        raise "The current omnibus environment has no PATH" if result.length == 0
-        raise "The current omnibus environment has duplicate PATHs" if result.length > 1
-        result.first
+        case result.length
+        when 0
+          raise "The current omnibus environment has no PATH"
+        when 1
+          result.first
+        else
+          raise "The current omnibus environment has multiple PATH/Path variables."
+        end
       else
         "PATH"
       end
