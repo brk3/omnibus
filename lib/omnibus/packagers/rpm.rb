@@ -415,7 +415,7 @@ module Omnibus
     def create_rpm_file
       command =  %{rpmbuild}
       command << %{ --target #{safe_architecture}}
-      command << %{ -bb}
+      command << %{ -ba}
       command << %{ --buildroot #{staging_dir}/BUILD}
       command << %{ --define '_topdir #{staging_dir}'}
 
@@ -454,6 +454,10 @@ module Omnibus
       end
 
       FileSyncer.glob("#{staging_dir}/RPMS/**/*.rpm").each do |rpm|
+        copy_file(rpm, Config.package_dir)
+      end
+
+      FileSyncer.glob("#{staging_dir}/SRPMS/*.rpm").each do |rpm|
         copy_file(rpm, Config.package_dir)
       end
     end
